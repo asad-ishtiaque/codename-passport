@@ -103,5 +103,8 @@ venv.bak/
 # django staticfiles
 /static
 
+# DS store
+.DS_Store
+
 # mypy
 .mypy_cache/
