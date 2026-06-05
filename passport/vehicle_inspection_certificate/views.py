@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from passport.core.views import BaseDocumentViewSet
+from passport.vehicle_inspection_certificate.models import VehicleInspectionCertificate
+from passport.vehicle_inspection_certificate.serializer import VehicleInspectionCertificateSerializer
 
-# Create your views here.
+class VehicleInspectionCertificateView(BaseDocumentViewSet):
+    model = VehicleInspectionCertificate
+    serializer_class = VehicleInspectionCertificateSerializer

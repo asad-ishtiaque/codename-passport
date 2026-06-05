@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from passport.core.views import BaseDocumentViewSet
+from passport.residence_permit.models import ResidencePermit
+from passport.residence_permit.serializer import ResidencePermitSerializer
 
-# Create your views here.
+class ResidencePermitView(BaseDocumentViewSet):
+    model = ResidencePermit
+    serializer_class = ResidencePermitSerializer
