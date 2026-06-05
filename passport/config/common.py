@@ -22,6 +22,9 @@ class Common(Configuration):
 
         # Your apps
         'passport.passport.apps.PassportConfig',
+        'passport.driving_license',
+        'passport.residence_permit',
+        'passport.vehicle_inspection_certificate',
         'passport.users',
 
     )
