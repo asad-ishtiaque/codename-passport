@@ -1,5 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from core.services import DocumentUploadService
 
 class BaseDocumentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -12,5 +14,8 @@ class BaseDocumentViewSet(viewsets.ModelViewSet):
             user_id=self.request.user
         )
 
+
     def perform_create(self, serializer):
+        file = self.request.FILES.get("file")
+        DocumentUploadService.process_upload_file(file)
         serializer.save(user_id=self.request.user)

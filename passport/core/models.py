@@ -1,7 +1,16 @@
+from random import choice
 from django.db import models
+from passport.core.utils import document_upload_path
+
+# DOCUMENT_TYPES = [
+#         ("passport", "Passport"),
+#         ("driving_license", "Driving License"),
+#         ("vehicle_inspection_certificate", "Vehicle Inspection Certificate"),
+#         ("residence_permit", "Residence Permit")
+#     ]
 
 class DocumentBase(models.Model):
-    image = models.ImageField(upload_to='documentBase/')
+    document = models.FileField(upload_to=document_upload_path)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     date_of_birth = models.DateField()
