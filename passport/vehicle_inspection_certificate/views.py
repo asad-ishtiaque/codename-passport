@@ -2,6 +2,6 @@ from passport.core.views import BaseDocumentViewSet
 from passport.vehicle_inspection_certificate.models import VehicleInspectionCertificate
 from passport.vehicle_inspection_certificate.serializer import VehicleInspectionCertificateSerializer
 
-class VehicleInspectionCertificateView(BaseDocumentViewSet):
+class VehicleInspectionCertificateViewSet(BaseDocumentViewSet):
     model = VehicleInspectionCertificate
     serializer_class = VehicleInspectionCertificateSerializer

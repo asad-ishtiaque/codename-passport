@@ -20,3 +20,4 @@ class UserViewSet(mixins.CreateModelMixin,
         if is_creating_a_new_user:
             return CreateUserSerializer
         return self.serializer_class
+ 

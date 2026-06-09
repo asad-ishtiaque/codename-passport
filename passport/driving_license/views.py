@@ -3,6 +3,6 @@ from passport.core.views import BaseDocumentViewSet
 from passport.driving_license.models import DrivingLicense
 from passport.driving_license.serializer import DrivingLicenseSerializer
 
-class DrivingLicenseView(BaseDocumentViewSet):
+class DrivingLicenseViewSet(BaseDocumentViewSet):
     model = DrivingLicense
     serializer_class = DrivingLicenseSerializer

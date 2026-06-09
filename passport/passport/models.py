@@ -4,6 +4,6 @@ from passport.core.models import IdentityDocumentBase
 
 
 class Passport(IdentityDocumentBase):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     passport_number = models.CharField(max_length=255)
     issue_state = models.CharField(max_length=255, blank=True, null=True)
