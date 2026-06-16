@@ -5,3 +5,4 @@ from passport.passport.serializer import PassportSerializer
 class PasspportViewSet(BaseDocumentViewSet):
     model = Passport
     serializer_class = PassportSerializer
+    

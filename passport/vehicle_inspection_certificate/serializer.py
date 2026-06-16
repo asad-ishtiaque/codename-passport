@@ -6,5 +6,5 @@ class VehicleInspectionCertificateSerializer(BaseDocumentSerializer):
     class Meta:
         model = VehicleInspectionCertificate
         fields = "__all__"
-        read_only_fields = ["user_id"] 
+        read_only_fields = ["user"] 
         

@@ -1,7 +1,9 @@
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from core.services import DocumentUploadService
+from passport.core.services import DocumentUploadService
+import logging
+
+logger = logging.getLogger(__name__)
 
 class BaseDocumentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -11,11 +13,18 @@ class BaseDocumentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.model.objects.filter(
-            user_id=self.request.user
+            user=self.request.user
         )
 
-
     def perform_create(self, serializer):
-        file = self.request.FILES.get("file")
-        DocumentUploadService.process_upload_file(file)
-        serializer.save(user_id=self.request.user)
+        instance = serializer.save(user=self.request.user)
+        document = instance.document
+        logger.info("DOCUMENT in perform_create: %s", document)
+        raw_ocr_data = DocumentUploadService.process_upload(
+            document,
+            document_type=self.model._meta.model_name,
+        )
+        logger.info("OCR data for %s: %s", self.model._meta.model_name, raw_ocr_data)
+
+ 
+    

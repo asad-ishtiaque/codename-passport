@@ -178,6 +178,11 @@ class Common(Configuration):
                 'handlers': ['console'],
                 'level': 'INFO'
             },
+            'passport': {
+                'handlers': ['console'],
+                'level': 'INFO',
+                'propagate': False,
+            },
         }
     }
 

@@ -6,4 +6,4 @@ class DrivingLicenseSerializer(BaseDocumentSerializer):
     class Meta:
         model = DrivingLicense
         fields = "__all__"
-        read_only_fields = ["user_id"]
+        read_only_fields = ["user"]

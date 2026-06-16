@@ -1,28 +1,18 @@
-import os
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
 from passport.core.validators import validate_document
-from rest_framework.response import Response
-
+from passport.core.ocr import EasyOCRService
 
 ALLOWED_EXTENSIONS = ["jpg", "jpeg", "png", "pdf"]
 
 
 class DocumentUploadService:
     @staticmethod
-    def save_file(file, folder="documents"):
+    def process_upload(document, document_type=None):
         """
-        Saves file to storage and returns path
+        Runs the shared upload pipeline before the model FileField stores the
+        document.
         """
-        path = f"{folder}/{file.name}"
-        saved_path = default_storage.save(path, ContentFile(file.read()))
+        raw_ocr_data = EasyOCRService.extract(document)
 
-        return saved_path
+        return raw_ocr_data
 
-    @staticmethod
-    def process_upload_file(file):
-        if not file:
-            return Response({"error": "No file uploaded"}, status=400)
 
-        validate_document(file)
-        DocumentUploadService.save_file(file)
