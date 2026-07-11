@@ -4,7 +4,7 @@ FROM base AS builder
 WORKDIR /build
 COPY ./requirements.txt requirements.txt
 # rapidocr pulls in opencv-python (needs X11); swap for headless in containers
-RUN pip3 install --no-cache-dir --target=/build/packages -r requirements.txt \
+RUN pip3 install --no-cache-dir --target=/build/packages -r requirements.txt
 
 FROM base AS runtime
 
