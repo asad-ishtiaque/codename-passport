@@ -1,4 +1,18 @@
 services:
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
   postgres:
     image: postgres:16.4
     env_file:
@@ -41,3 +55,4 @@ services:
 
 volumes:
   postgres_data:
+  ollama_data:

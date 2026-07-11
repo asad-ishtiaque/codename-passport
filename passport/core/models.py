@@ -1,4 +1,3 @@
-from random import choice
 from django.db import models
 from passport.core.utils import document_upload_path
 
@@ -8,6 +7,11 @@ from passport.core.utils import document_upload_path
 #         ("vehicle_inspection_certificate", "Vehicle Inspection Certificate"),
 #         ("residence_permit", "Residence Permit")
 #     ]
+
+class Gender(models.TextChoices):
+    MALE = "M", "Male"
+    FEMALE = "F", "Female"
+    X = "X", "Unspecified"
 
 class DocumentBase(models.Model):
     document = models.FileField(upload_to=document_upload_path)
@@ -24,7 +28,7 @@ class DocumentBase(models.Model):
         abstract = True
 
 class IdentityDocumentBase(DocumentBase):
-    gender = models.CharField(max_length=255)
+    gender = models.CharField(max_length=1, choices=Gender.choices)
     nationality = models.CharField(max_length=255)
 
     class Meta:

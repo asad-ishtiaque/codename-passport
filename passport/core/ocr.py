@@ -1,18 +1,16 @@
 # passport/core/ocr.py
 
-import easyocr
+from rapidocr import RapidOCR
 from pdf2image import convert_from_path
 import logging
 
 logger = logging.getLogger(__name__)
 
-
-class EasyOCRService:
-    reader = easyocr.Reader(["en"], gpu=False)
+class RapidOCRService:
+    engine = RapidOCR()
 
     @classmethod
     def extract(cls, document):
-        logger.info("Document: %s", document)
         file_path = document.path
 
         if file_path.lower().endswith(".pdf"):
@@ -22,19 +20,10 @@ class EasyOCRService:
 
     @classmethod
     def extract_from_image(cls, file_path):
-        results = cls.reader.readtext(file_path)
+        result = cls.engine(file_path)
+        logger.info("Result from OCR: %s", result)
+        return result
 
-        return {
-            "raw_text": "\n".join([text for _, text, _ in results]),
-            "items": [
-                {
-                    "text": text,
-                    "confidence": confidence,
-                    "box": box,
-                }
-                for box, text, confidence in results
-            ],
-        }
 
     @classmethod
     def extract_from_pdf(cls, file_path):
@@ -43,17 +32,19 @@ class EasyOCRService:
         all_items = []
 
         for page in pages:
-            results = cls.reader.readtext(page)
+            result = cls.engine(page)
+            logger.info("Result from OCR: %s", result)
+            return result
+    
+    @staticmethod
+    def extract_text(result):
+        if result is None:
+            return ""
 
-            for box, text, confidence in results:
-                all_text.append(text)
-                all_items.append({
-                    "text": text,
-                    "confidence": confidence,
-                    "box": box,
-                })
+        return "\n".join(result.txts)
 
-        return {
-            "raw_text": "\n".join(all_text),
-            "items": all_items,
-        }
+    @staticmethod
+    def extract_scores(result):
+        if result is None:
+            return ""
+        return "\n".join(result.scores)

@@ -1,3 +1,4 @@
+from django.views.generic import detail
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from passport.core.services import DocumentUploadService
@@ -20,11 +21,9 @@ class BaseDocumentViewSet(viewsets.ModelViewSet):
         instance = serializer.save(user=self.request.user)
         document = instance.document
         logger.info("DOCUMENT in perform_create: %s", document)
-        raw_ocr_data = DocumentUploadService.process_upload(
+        text_data = DocumentUploadService.process_upload(
             document,
             document_type=self.model._meta.model_name,
+            serializer_class=self.serializer_class,
         )
-        logger.info("OCR data for %s: %s", self.model._meta.model_name, raw_ocr_data)
-
- 
-    
+        logger.info("OCR data for %s: %s", self.model._meta.model_name, text_data)
