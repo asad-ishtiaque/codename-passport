@@ -1,6 +1,9 @@
-# codename_passport
+## Overview
 
-Check out the project's [documentation](http://asad-ishtiaque.github.io/codename_passport/).
+This project is an AI-powered document management application built using **OCR** and **Large Language Models (LLMs)** to automatically identify, classify, and extract information from uploaded documents. It processes scanned images and PDFs, extracts key metadata such as document type, issue date, and expiry date, and stores everything in a searchable format.
+
+The application also tracks document expiration dates, sends reminder notifications, and integrates with **Google Calendar** to create renewal events automatically. Additional features include AI-based document categorization, full-text search, metadata extraction, secure document storage, and a modular architecture that supports different OCR engines and LLM providers.
+
 
 ## Prerequisites
 
