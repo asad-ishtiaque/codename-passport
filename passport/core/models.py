@@ -13,14 +13,25 @@ class Gender(models.TextChoices):
     FEMALE = "F", "Female"
     X = "X", "Unspecified"
 
+class DocumentStatus(models.TextChoices):
+    UPLOADED = "UPLOADED", "Uploaded"
+    PROCESSING = "PROCESSING", "Processing"
+    EXTRACTED = "EXTRACTED", "Extracted"
+    FAILED = "FAILED", "Failed"
+
 class DocumentBase(models.Model):
     document = models.FileField(upload_to=document_upload_path)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    date_of_birth = models.DateField()
-    issue_date = models.DateField()
-    issue_country = models.CharField(max_length=255)
-    expiry_date = models.DateField()
+    status = models.CharField(
+        max_length=20,
+        choices=DocumentStatus.choices,
+        default=DocumentStatus.UPLOADED,
+    )
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    issue_date = models.DateField(blank=True, null=True)
+    issue_country = models.CharField(max_length=255, blank=True, null=True)
+    expiry_date = models.DateField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
  
@@ -28,8 +39,8 @@ class DocumentBase(models.Model):
         abstract = True
 
 class IdentityDocumentBase(DocumentBase):
-    gender = models.CharField(max_length=1, choices=Gender.choices)
-    nationality = models.CharField(max_length=255)
+    gender = models.CharField(max_length=1, choices=Gender.choices, blank=True, null=True)
+    nationality = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         abstract = True

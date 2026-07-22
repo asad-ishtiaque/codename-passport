@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from passport.core.validators import validate_document
+from passport.core.models import DocumentBase
 
 class BaseDocumentSerializer(serializers.ModelSerializer):
     NON_EXTRACTABLE_FIELD_TYPES = (
@@ -12,6 +13,7 @@ class BaseDocumentSerializer(serializers.ModelSerializer):
         "id",
         "user",
         "document",
+        "status",
         "created_at",
         "updated_at",
     }
@@ -77,3 +79,13 @@ class BaseDocumentSerializer(serializers.ModelSerializer):
 
     class Meta:
         abstract = True
+
+
+class DocumentUploadSerializer(serializers.ModelSerializer):
+
+    def validate_document(self, document):
+        validate_document(document)
+        return document
+
+    class Meta:
+        fields = ["document"]
